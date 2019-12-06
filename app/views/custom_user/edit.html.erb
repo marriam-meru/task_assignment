@@ -1,0 +1,19 @@
+<h1>Assign Institution To Institution Manager </h1>
+
+<%= form_with url: custom_user_path, class: "nifty_form my_form form" , method: :patch do |u| %>
+
+  <div class="form-group">
+    <%= label(:institution_id, "Institution Name") %>
+    <%= select_tag :institution_id, options_for_select(@institution.collect{ |u| [u.name, u.id] }) , class:"form-control"%>
+  </div>
+
+  <%  if is_admin? %>
+    <%= u.submit "Assign Manager", class:"btn button button_customized"%>
+    <%=link_to "Cancel", custom_user_index_path, class: "btn button button_customized" %>
+  
+  <%  else %>
+    <%= u.submit "Assign User", class:"btn button button_customized"%>
+    <%=link_to "Cancel", custom_user_index_path, class: "btn button button_customized" %>
+
+  <% end %>
+<% end %>

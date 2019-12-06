@@ -1,0 +1,14 @@
+<%= form_with url: institution_index_path, class: "nifty_form my_form form" , method: :post do |u| %>
+  <div class="form-group">
+    <%= label(:institution, :name, "Institution Name") %>
+    <%= u.text_field :name, class:"form-control form_control-customized"%>
+  </div>
+
+  <div class="form-group">
+    <%= label(:institution, :logo, "Logo")%>
+    <%= u.file_field :logo , class:"form-control form_control-customized" %>
+  </div>
+
+  <%= u.submit "Create Institution", class:"btn button button_customized" %>
+  <%=link_to "Cancel", root_path, class: "btn button button_customized" %>
+<% end %>

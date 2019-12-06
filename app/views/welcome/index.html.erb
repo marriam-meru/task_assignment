@@ -1,0 +1,7 @@
+<% if current_user %>
+  <h3>Welcome: <%= current_user.email %></h3>
+<% else %>
+  <div class="row">
+    <p class= "main_paragraph"> Please Signin in order to see more functionalities </p>
+  </div>
+<% end %>

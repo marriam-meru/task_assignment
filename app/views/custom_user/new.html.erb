@@ -1,0 +1,48 @@
+<%= form_with url: custom_user_index_path, class: "nifty_form my_form form" , method: :post do |f| %>
+
+  <div class="form-group">
+    <%= f.label :first_name %>
+    <%= f.text_field :first_name, autofocus: true, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :last_name %>
+    <%= f.text_field :last_name, autofocus: true, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :phone_number %>
+    <%= f.text_field :phone_number, class: 'form-control' %>
+  </div> 
+
+  <div class="form-group">
+    <%= f.label :address %>
+    <%= f.text_field :address, class: 'form-control' %>
+  </div> 
+
+  <div class="form-group">
+    <%= f.label :email %>
+    <%= f.text_field :email, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :password %>
+    <%= f.text_field :password, class: 'form-control' %>
+  </div>
+
+  <%  if is_admin? %>
+    <div class="form-group">
+      <%= label(:institution_id, "Institution Name") %>
+      <%= select_tag :institution_id, options_for_select(@institution.collect{ |u| [u.name, u.id] }) , class:"form-control"%>
+    </div>
+
+    <div class="form-group">
+      <%= label(:user_role, "Assign Role") %>
+      <%= select_tag :user_role, options_for_select([ "institution manager", "no role"], "Assign Role") , class:"form-control"%>
+    </div>
+  <% end %>
+
+
+  <%= f.submit "Create User", class:"btn button button_customized", value: "user_role" %>
+  <%=link_to "Cancel", custom_user_index_path, class: "btn button button_customized" %>
+<% end %>

@@ -1,0 +1,44 @@
+<h1>Users</h1>
+<% if is_institution_manager? %>
+<table class="table">
+    <thead>
+      <tr>
+        <th class="th">First Name</th>
+        <th class="th">Last Name</th>
+        <th class="th">Email</th>
+        <th class="th">Address</th>
+        <th class="th">Phone Number</th>
+        <th class="th">Time Zone</th>
+        <th class="th">Current Role</th>
+        <th class="th">Institution Name</th>
+        <th class="th">Assign Institution User</th>
+        <th class="th">View Report</th>
+      </tr>
+    </thead>
+  
+    <tbody>
+      <% @user.each do |user|%>
+        <tr class="tr">
+          <td class="td"><%= user.first_name %></td>
+          <td class="td"><%= user.last_name %></td>
+          <td class="td"><%= user.email %></td>
+          <td class="td"><%= user.address %></td>
+          <td class="td"><%= user.phone_number %></td>
+          <td class="td">Aisa/Karachi</td>
+          <td class="td"><%= user.user_role %></td>
+          <td class="td"><%=
+              institution_name = @isntitution_record.find_by(id: user.id)
+              if institution_name.nil?
+                "No Institution"
+              else
+                institution_name.name
+              end
+            %>
+          </td>
+          <td class="td"><%= link_to 'Assign Institution User' ,edit_custom_user_path(user)%></td>
+          <td class="td"><%= link_to 'View Report' ,checkin_path(user)%></td
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

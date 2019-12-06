@@ -1,0 +1,2 @@
+class UserCheckin < ApplicationRecord
+end

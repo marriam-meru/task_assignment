@@ -1,0 +1,15 @@
+<%= form_with url: institution_path, class: "nifty_form my_form form" , method: :patch do |u| %>
+
+  <div class="form-group">
+    <%= label(:institution, :name, "Institution Name") %>
+    <%= u.text_field :name, class:"form-control form_control-customized" , value: @institution.name%>
+  </div>
+
+  <div class="form-group">
+    <%= label(:product, :logo, "Logo")%>
+    <%= u.file_field :logo , class:"form-control form_control-customized"%>
+  </div>
+
+  <%= u.submit "Update Institution", class:"btn button button_customized" %>
+  <%=link_to "Cancel", root_path, class: "btn button button_customized" %>
+<% end %>

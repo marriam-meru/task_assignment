@@ -1,0 +1,41 @@
+<h1> <%= @name %> Checkin History</h1>
+<div class=row>
+  <div class="col-lg-6">
+    <table class="table">
+      <thead>
+        <tr>
+          <th class="th">Checkin Time</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @checkin_history.each do |checkin| %>
+          <tr class="tr">
+            <td class="td"><%= checkin.checkin_time %></td>
+          </tr>
+        <%end%>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-lg-6">
+    <table class="table">
+    <thead>
+      <tr>
+        <th class="th">Checkout Time</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @checkout_history.each do |checkout| %>
+        <tr class="tr">
+          <td class="td"><%= checkout.checkout_time %></td>
+        </tr>
+      <%end%>
+    </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="row">
+  <%= link_to 'Cancel', custom_user_index_path, class:'btn btn-primary'%>
+</div>

@@ -1,0 +1,73 @@
+
+<h1>Users</h1>
+<%  if is_admin? || is_institution_manager?%>
+  <table class="table">
+    <thead>
+      <tr>
+        <th class="th">First Name</th>
+        <th class="th">Last Name</th>
+        <th class="th">Email</th>
+        <th class="th">Address</th>
+        <th class="th">Phone Number</th>
+        <th class="th">Time Zone</th>
+        <th class="th">Current Role</th>
+        <th class="th">Institution Name</th>
+        <%  if is_admin? %>
+          <th class="th">Delete User</th>
+          <th class="th">Change Role</th>
+        <% end %>
+        <%  if is_institution_manager? %>
+          <th class="th">Assign Institution User</th>
+          <th class="th">View Report</th>
+        <% end %>
+      </tr>
+    </thead>
+  
+    <tbody>
+      <% @users.each do |user| %>
+        <tr class="tr">
+          <td class="td"><%= user.first_name %></td>
+          <td class="td"><%= user.last_name %></td>
+          <td class="td"><%= user.email %></td>
+          <td class="td"><%= user.address %></td>
+          <td class="td"><%= user.phone_number %></td>
+          <td class="td">Aisa/Karachi</td>
+          <td class="td"><%= user.user_role %></td>
+          <td class="td"><%=
+            if @isntitution_record.empty?
+                "No Institution"
+            else 
+
+              institution_name = @isntitution_record.find_by(id: user.id)
+              if institution_name.nil?
+                "No Institution"
+              else
+                institution_name.name
+              end
+            end
+            %>
+          </td>
+          <%  if is_admin? %>
+            <td class="td"><%= link_to 'Delete User' ,custom_user_path(user), method: :delete%></td>
+            <td class="td"><%= link_to 'Assign Institution Manager' ,edit_custom_user_path(user)%></td>
+          <% end %>
+          <%  if is_institution_manager? %>
+            <td class="td"><%= link_to 'Assign Institution User' ,edit_custom_user_path(user)%></td>
+            <td class="td"><%= link_to 'View Report' ,checkin_path(user)%></td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%end%>
+
+  <% if is_institution_user?%>
+    <%= link_to "Check In", checkin_index_path(current_user),class:"btn btn-primary", method: :post%>
+    <%= link_to "Check Out", checkout_index_path(current_user),class:"btn btn-primary", method: :post%>
+    <%= link_to "View Report",  checkin_path(current_user),class:"customized-link"%>
+  <% end %>
+  
+  
+  <%  if is_admin? %>
+    <%= link_to 'New User', new_custom_user_path , class:'btn btn-primary'%>
+  <%end%>
