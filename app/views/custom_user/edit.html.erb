@@ -7,7 +7,7 @@
     <%= select_tag :institution_id, options_for_select(@institution.collect{ |u| [u.name, u.id] }) , class:"form-control"%>
   </div>
 
-  <%  if is_admin? %>
+  <%  if current_user.admin? %>
     <%= u.submit "Assign Manager", class:"btn button button_customized"%>
     <%=link_to "Cancel", custom_user_index_path, class: "btn button button_customized" %>
   

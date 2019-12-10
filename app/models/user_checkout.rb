@@ -1,2 +1,0 @@
-class UserCheckout < ApplicationRecord
-end

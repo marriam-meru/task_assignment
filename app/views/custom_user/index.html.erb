@@ -1,6 +1,5 @@
-
 <h1>Users</h1>
-<%  if is_admin? || is_institution_manager?%>
+<%  if current_user.admin? || current_user.institution_manager? %>
   <table class="table">
     <thead>
       <tr>
@@ -12,11 +11,11 @@
         <th class="th">Time Zone</th>
         <th class="th">Current Role</th>
         <th class="th">Institution Name</th>
-        <%  if is_admin? %>
+        <%  if current_user.admin? %>
           <th class="th">Delete User</th>
           <th class="th">Change Role</th>
         <% end %>
-        <%  if is_institution_manager? %>
+        <%  if current_user.institution_manager? %>
           <th class="th">Assign Institution User</th>
           <th class="th">View Report</th>
         <% end %>
@@ -32,28 +31,22 @@
           <td class="td"><%= user.address %></td>
           <td class="td"><%= user.phone_number %></td>
           <td class="td">Aisa/Karachi</td>
-          <td class="td"><%= user.user_role %></td>
+          <td class="td"><%=user.roles.to_s.titleize %></td>
           <td class="td"><%=
-            if @isntitution_record.empty?
-                "No Institution"
+            if user.institution.present?
+              user.institution.name
             else 
-
-              institution_name = @isntitution_record.find_by(id: user.id)
-              if institution_name.nil?
-                "No Institution"
-              else
-                institution_name.name
-              end
+              "No Institution"
             end
             %>
           </td>
-          <%  if is_admin? %>
+          <%  if current_user.admin? %>
             <td class="td"><%= link_to 'Delete User' ,custom_user_path(user), method: :delete%></td>
             <td class="td"><%= link_to 'Assign Institution Manager' ,edit_custom_user_path(user)%></td>
           <% end %>
-          <%  if is_institution_manager? %>
-            <td class="td"><%= link_to 'Assign Institution User' ,edit_custom_user_path(user)%></td>
-            <td class="td"><%= link_to 'View Report' ,checkin_path(user)%></td>
+          <%  if current_user.institution_manager? %>
+            <td class="td"><%= link_to 'Assign Institution User' ,custom_user_path(user), method: :patch%></td>
+            <td class="td"><%= link_to "View Report", checkin_checkout_history_path(user)%></td
           <% end %>
         </tr>
       <% end %>
@@ -61,13 +54,15 @@
   </table>
   <%end%>
 
-  <% if is_institution_user?%>
-    <%= link_to "Check In", checkin_index_path(current_user),class:"btn btn-primary", method: :post%>
-    <%= link_to "Check Out", checkout_index_path(current_user),class:"btn btn-primary", method: :post%>
-    <%= link_to "View Report",  checkin_path(current_user),class:"customized-link"%>
+  <% if current_user.institution_user? %>
+    <% if !(CheckinCheckoutHistory.is_user_available?(current_user)) || CheckinCheckoutHistory.is_checkout?(current_user)  %>
+        <%= link_to "Check In", checkin_checkout_history_index_path("checkin"),class:"btn btn-primary", method: :post%>
+    <% else %>
+      <%= link_to "Check Out", checkin_checkout_history_index_path("checkout"),class:"btn btn-primary", method: :post%>
+    <% end %> 
+    <%= link_to "View Report", checkin_checkout_history_path(current_user),class:"btn btn-primary"%>
   <% end %>
-  
-  
-  <%  if is_admin? %>
+
+  <%  if current_user.admin? %>
     <%= link_to 'New User', new_custom_user_path , class:'btn btn-primary'%>
   <%end%>

@@ -1,2 +1,0 @@
-class UserCheckin < ApplicationRecord
-end

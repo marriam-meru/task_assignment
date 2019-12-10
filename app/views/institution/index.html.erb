@@ -5,7 +5,7 @@
       <th class="th">Institution Name</th>
       <th class="th">Logo</th>
       <th class="th">Edit</th>
-      <% if is_admin?%>
+      <% if current_user.admin?%>
         <th class="th">Delete</th>
       <% end %>
     </tr>
@@ -17,14 +17,14 @@
         <td class="td"><%= institution.name %></td>
         <td class="td"><%= image_tag institution.logo, class: 'images_customized'%></td>
         <td class="td"><%= link_to 'Edit Institution', edit_institution_path(institution), method: :get%></td>
-        <% if is_admin?%>
-          <td class="td"><%= link_to 'Delete Institution', institution_path(institution) , method: :destroy%></td>
+        <% if current_user.admin?%>
+          <td class="td"><%= link_to 'Delete Institution', institution_path(institution) , method: :delete%></td>
         <%end%>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<% if is_admin?%>
+<% if current_user.admin?%>
   <%= link_to 'New Institution', new_institution_path , class:'btn btn-primary'%>
 <%end%>

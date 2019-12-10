@@ -1,13 +1,9 @@
 Rails.application.routes.draw do
-  get 'checkout/new'
-  get 'checkout/create'
   devise_for :users, controllers: { confirmations: 'users/confirmations' , passwords: 'users/passwords'}
-  root 'welcome#index'
+  root 'custom_user#index'
 
   resources :institution
-  # resources :customusers
-  resources :checkin, only: [:new, :create,:show]
-  resources :checkout, only: [:new, :create]
+  resources :checkin_checkout_history, only: [:new, :create,:show]
   resources :user
   resources :custom_user
 

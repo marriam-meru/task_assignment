@@ -1,4 +1,10 @@
-<h1> <%= @name %> Checkin History</h1>
+<h1> 
+  <% if !current_user.institution_manager? %>
+    <%= current_user.first_name %> Checkin History
+  <% else %>
+    Checkin History
+  <% end %>
+</h1>
 <div class=row>
   <div class="col-lg-6">
     <table class="table">
@@ -11,7 +17,7 @@
       <tbody>
         <% @checkin_history.each do |checkin| %>
           <tr class="tr">
-            <td class="td"><%= checkin.checkin_time %></td>
+            <td class="td"><%= checkin.user_time %></td>
           </tr>
         <%end%>
       </tbody>
@@ -28,7 +34,7 @@
     <tbody>
       <% @checkout_history.each do |checkout| %>
         <tr class="tr">
-          <td class="td"><%= checkout.checkout_time %></td>
+          <td class="td"><%= checkout.user_time %></td>
         </tr>
       <%end%>
     </tbody>
